@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terminale di Laurea - Regalo Speciale per Dottore in Informatica</title>
+    <meta name="description" content="Un finto terminale Linux interattivo per sbloccare la lettera di laurea per uno studente di informatica." />
+    
+    <!-- OpenGraph / Social Meta Tags -->
+    <meta property="og:title" content="Terminale di Laurea - Dottore in Informatica" />
+    <meta property="og:description" content="Finto terminale Linux interattivo che nasconde una lettera di laurea sbloccabile." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Google Fonts for Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Fogli di stile Vanilla -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+
+    <!-- ====================================================================
+         1. SCHERMATA DI BOOT KERNEL LINUX & MATRIX INTRO
+         ==================================================================== -->
+    <section id="boot-screen" aria-label="Schermata di Avvio Linux">
+      <!-- Matrix rain di sfondo durante il boot -->
+      <canvas id="boot-matrix-canvas" aria-hidden="true"></canvas>
+      <div id="boot-content">
+        <div id="boot-matrix-header">
+          <div class="matrix-brand">[ SYSTEM_INITIALIZATION // MATRIX_PROTOCOL_V8 ]</div>
+          <div class="matrix-subbrand">&gt;&gt; WAKE UP, NEO-DOTTORE... THE MATRIX HAS YOU.</div>
+        </div>
+        <div id="boot-log"></div>
+      </div>
+      <button id="boot-skip-btn" class="boot-skip-btn" type="button">Salta Boot ➔</button>
+    </section>
+
+    <!-- ====================================================================
+         2. TERMINALE LINUX INTERATTIVO
+         ==================================================================== -->
+    <main id="terminal-container" aria-label="Terminale Linux">
+      <!-- Sottile pioggia di codice Matrix nello sfondo del terminale -->
+      <canvas id="terminal-matrix-bg" aria-hidden="true"></canvas>
+
+      <div class="terminal-window">
+        <!-- Header della finestra -->
+        <header class="terminal-header">
+          <div class="terminal-buttons">
+            <span class="term-btn btn-close" title="Chiudi"></span>
+            <span class="term-btn btn-minimize" title="Riduci"></span>
+            <span class="term-btn btn-maximize" title="Ingrandisci"></span>
+          </div>
+          <div class="terminal-title">
+            <span class="matrix-glow-text">ospite@server-laurea: ~ (bash) [MATRIX_MODE: ACTIVE]</span>
+          </div>
+          <div class="terminal-status-badge">
+            ● PROTETTO
+          </div>
+        </header>
+
+        <!-- Corpo del terminale con output e prompt -->
+        <div class="terminal-body" id="terminal-body">
+          <div id="terminal-output">
+            <div class="term-output-line system-banner">
+========================================================================
+ BENVENUTO SUL SERVER PRIVATO DI LAUREA v1.0.4-LTS (x86_64)
+ [SYSTEM NOTICE: PROTOCOLLO MATRIX ATTIVO - CIFRATURA SIMMETRICA 4096-BIT]
+ 
+ Tutti i file della dedica sono protetti da cifratura simmetrica.
+ Digita <span style="color:#00ff66;font-weight:bold;">'cat LEGGIMI.txt'</span> per iniziare oppure <span style="color:#58a6ff;font-weight:bold;">'help'</span> per la guida comandi.
+========================================================================</div>
+          </div>
+
+          <!-- Riga di comando attiva -->
+          <div class="command-line">
+            <span class="prompt-prefix">ospite@server-laurea:<span id="prompt-path" class="prompt-path">~</span><span class="prompt-symbol">$</span></span>
+            <div class="command-input-wrapper">
+              <input
+                type="text"
+                id="command-input"
+                class="command-input"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-label="Prompt di comando"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra Pulsanti Rapidi (Mobile Friendly & Desktop) -->
+        <nav class="mobile-action-bar" aria-label="Comandi Rapidi">
+          <button id="m-btn-ls" class="quick-btn" type="button" title="Elenca i file">[ ls ]</button>
+          <button id="m-btn-cd" class="quick-btn" type="button" title="Cambia cartella">[ cd ]</button>
+          <button id="m-btn-back" class="quick-btn nav-back" type="button" title="Torna indietro alla cartella principale">[ indietro ⬅ ]</button>
+          <button id="m-btn-cat" class="quick-btn" type="button" title="Leggi file di testo">[ cat ]</button>
+          <button id="m-btn-view" class="quick-btn" type="button" title="Visualizza immagini">[ view ]</button>
+          <button id="m-btn-sblocca" class="quick-btn highlight" type="button" title="Sblocca lettera con password">[ sblocca ]</button>
+          <button id="m-btn-help" class="quick-btn" type="button" title="Guida comandi">[ guida ]</button>
+          <button id="m-btn-clear" class="quick-btn" type="button" title="Pulisci schermo">[ clear ]</button>
+        </nav>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         3. RANSOMWARE HACKER VIRUS SIMULATOR MODAL (FILE TRAPPOLA MEMORIES)
+         ==================================================================== -->
+    <div id="ransomware-modal" role="dialog" aria-modal="true" aria-labelledby="ransomware-title">
+      <!-- Glitch canvas and scanlines background -->
+      <canvas id="ransomware-canvas" aria-hidden="true"></canvas>
+      <div class="ransomware-glitch-overlay"></div>
+      
+      <div class="ransomware-box" id="ransomware-box">
+        <div class="ransomware-header">
+          <div class="ransomware-skull">☠</div>
+          <div class="ransomware-alert-badge">!!! SYSTEM BREACH DETECTED - CRITICAL FAILURE !!!</div>
+        </div>
+
+        <h2 id="ransomware-title" class="ransomware-title">
+          ATTENZIONE: FILE CRITTOGRAFATI DA VIRUS RANSOMWARE!
+        </h2>
+
+        <div class="ransomware-status-banner">
+          [!] IL FILE <span id="ransomware-target-file" class="glitch-filename">TARGET.JPG</span> ERA UNA TRAPPOLA HACKER [!]
+        </div>
+
+        <div class="ransomware-message">
+          <p class="ransomware-lead">
+            TUTTI I TUOI DATI PERSONALI, I CODICI SORGENTE DELLA TESI E LE FOTO PRIVATE SONO STATI SEQUESTRATI E CIFRATI CON ALGORITMO QUANTISTICO MILITARE IRREVERSIBILE!
+          </p>
+          <p class="ransomware-sub">
+            Kernel panic: <span class="ransomware-code">0xDEADBEEF // MEMORY_CORRUPTION_LAUREA</span>. Il sistema sta subendo un collasso irreversibile del buffer stack.
+          </p>
+          <div class="ransomware-countdown-box">
+            TEMPO RIMASTO PRIMA DELLA CANCELLAZIONE TOTALE DEL DISCO:
+            <div id="ransomware-timer" class="ransomware-timer">05:00.000</div>
+          </div>
+        </div>
+
+        <div class="ransomware-demand-box">
+          <div class="ransomware-demand-title">CONDIZIONE PER LA DECRITTAZIONE E SALVARE IL SISTEMA:</div>
+          <div class="ransomware-demand-instruction">
+            Non vogliamo Bitcoin né riscatto in denaro.<br>
+            <strong>PER RIAVERE I TUOI DATI, FATTI SUBITO UNO SHOT E POI PROSEGUI! 🥃</strong>
+          </div>
+        </div>
+
+        <div class="ransomware-actions">
+          <button id="ransomware-shot-btn" class="ransomware-shot-btn" type="button">
+            🥃 FATTO LO SHOT! (Ripristina Dati &amp; Torna Normale)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         2.5 QUIZ INFORMATICA PER SBLOCCARE L'INDIZIO (Penitenza Shot se sbagli)
+         ==================================================================== -->
+    <div id="quiz-modal" class="quiz-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title">
+      <div class="quiz-modal-box">
+        <!-- Barra di stato hacker -->
+        <div class="quiz-glitch-bar">
+          <span class="quiz-led"></span>
+          <span>SECURITY TEST // ACCREDITAMENTO ACCADEMICO NEO-DOTTORE</span>
+          <span class="quiz-led"></span>
+        </div>
+
+        <div class="quiz-header">
+          <div class="quiz-icon">🎓💻</div>
+          <h2 id="quiz-modal-title" class="quiz-title">VERIFICA COMPETENZE INFORMATICHE</h2>
+          <p class="quiz-subtitle">
+            L'accesso al file <span class="quiz-highlight">indizio.txt</span> è bloccato da un protocollo di sicurezza.<br>
+            Rispondi a 6 domande su Sistemi Operativi, Reti, Algoritmi e Linguaggi.<br>
+            <strong style="color: #f87171;">⚠️ REGOLA FERREA: per ogni errore c'è la PENITENZA: 1 MINISHOT DA BERE! 🥃</strong>
+          </p>
+        </div>
+
+        <!-- Indicatore di progresso e contatore shot -->
+        <div class="quiz-stats-bar">
+          <div class="quiz-progress-text" id="quiz-progress-text">Domanda 1 di 6</div>
+          <div class="quiz-shots-counter" id="quiz-shots-counter">🥃 Shot collezionati: <span id="quiz-shots-num">0</span></div>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+
+        <!-- Contenitore della domanda attiva -->
+        <div class="quiz-body" id="quiz-body">
+          <div class="quiz-category" id="quiz-category">SISTEMI OPERATIVI</div>
+          <h3 class="quiz-question-text" id="quiz-question-text">Testo domanda...</h3>
+          <div class="quiz-options-list" id="quiz-options-list">
+            <!-- I bottoni delle opzioni verranno generati dinamicamente da app.js -->
+          </div>
+        </div>
+
+        <!-- Feedback errore con animazione shot -->
+        <div class="quiz-shot-penalty-overlay" id="quiz-shot-penalty" style="display: none;">
+          <div class="penalty-inner">
+            <div class="penalty-icon">🥃💥</div>
+            <div class="penalty-title">RISPOSTA SBAGLIATA! MINISHOT IN ARRIVO!</div>
+            <p class="penalty-desc" id="quiz-penalty-explanation">Spiegazione errore...</p>
+            <div class="penalty-action-box">
+              <p class="penalty-prompt">Bevi il minishot davanti ai testimoni e poi continua:</p>
+              <button id="btn-quiz-shot-taken" class="btn-quiz-shot" type="button">
+                🥃 HO BEVUTO IL MINISHOT! (Avanti ➔)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risultato Finale / Messaggio Sblocco Automatico -->
+        <div class="quiz-success-view" id="quiz-success-view" style="display: none;">
+          <div class="quiz-success-icon">🎉🔓</div>
+          <h3 class="quiz-success-title">TEST INFORMATICO COMPLETATO!</h3>
+          <p class="quiz-success-summary" id="quiz-success-summary">
+            Hai completato tutte le domande.
+          </p>
+          <div class="quiz-unlocked-hint-box">
+            <div class="hint-box-tag">=== SISTEMA COMPLETAMENTE APERTO ===</div>
+            <div class="hint-box-content" id="quiz-unlocked-hint-text">
+              complimenti per aver completato il test. sfortunatamente non siamo bravi programmatori, quindi non ci sono indizi e non ci sono blocchi, è tutto aperto!
+            </div>
+          </div>
+          <div class="quiz-footer-actions">
+            <button id="btn-quiz-close" class="btn-primary" type="button">
+              🎉 Apri Subito la Dedica di Laurea!
+            </button>
+          </div>
+        </div>
+
+        <!-- Tasto di emergenza per richiudere -->
+        <button id="btn-quiz-cancel" class="quiz-cancel-btn" type="button">
+          Esci dal Quiz (e torna a studiare)
+        </button>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         3. CANVAS MATRIX RAIN (Animazione Decrittazione 3 Secondi)
+         ==================================================================== -->
+    <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+    <div id="matrix-text" class="matrix-overlay-text" aria-live="polite">
+      ACCESSO CONSENTITO<br>
+      <span style="font-size: 16px; color: #a3e635; font-weight: normal;">Decrittazione in corso... Attendere...</span>
+    </div>
+
+    <!-- ====================================================================
+         4. VISUALIZZATORE A SCHERMO INTERO PER LE IMMAGINI (view [file.jpg])
+         ==================================================================== -->
+    <div id="lightbox-modal" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption">
+      <button id="lightbox-close" class="lightbox-close-floating-btn" type="button" aria-label="Chiudi visualizzatore">
+        ✕ Chiudi [ESC]
+      </button>
+      <div class="lightbox-stage">
+        <img id="lightbox-img" class="lightbox-full-img" src="" alt="Immagine a schermo intero" />
+        <span id="lightbox-caption" class="lightbox-caption-floating"></span>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         5. FASE 2: PAGINA FINALE - LA LETTERA DI LAUREA
+         ==================================================================== -->
+    <article id="letter-page" aria-label="Lettera di Laurea">
+      <div class="letter-container">
+        
+        <!-- Header con badge accademico -->
+        <header class="letter-header">
+          <div class="academic-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            Dottore in Informatica
+          </div>
+          <h1 class="letter-title">Congratulazioni, Dottore!</h1>
+          <p class="letter-subtitle">Hai superato ogni bug, esame e compilazione. Oggi sei leggenda.</p>
+        </header>
+
+        <!-- Spazio per il Video Verticale (Formato smartphone 9:16) -->
+        <div class="letter-video-wrapper">
+          <div class="letter-video-frame">
+            <video 
+              id="letter-video" 
+              class="letter-vertical-video" 
+              controls 
+              playsinline
+              preload="metadata"
+              poster="immagini/laurea.jpg"
+              aria-label="Video dedica di laurea"
+            >
+              <source src="immagini/video_dedica.mp4" id="letter-video-source" type="video/mp4" />
+              Il tuo browser non supporta la riproduzione video HTML5.
+            </video>
+          </div>
+          <div class="letter-video-caption">
+            "Branch 'università' fuso con successo in 'vita_reale' con zero conflitti."
+          </div>
+        </div>
+
+        <!-- Corpo del testo della lettera -->
+        <div class="letter-body">
+          <p class="lead-paragraph">
+            Caro Neo-Dottore,
+          </p>
+
+          <p>
+            Sembrava ieri quando hai scritto il tuo primo titubante <span class="letter-code-pill">printf("Hello, World!\n");</span> senza immaginare la montagna di codice, formule e notti insonni che ti avrebbero separato da questo traguardo.
+          </p>
+
+          <p>
+            Hai affrontato prove degne dei peggiori algoritmi esponenziali: le ore passate a inseguire un puntatore nullo alle tre del mattino, i teoremi spietati di Analisi Matematica, le sessioni estenuanti di Reti di Calcolatori e le demo di laboratorio che crashavano regolarmente con <span class="letter-code-pill">Segmentation fault (core dumped)</span> a cinque minuti dalla consegna.
+          </p>
+
+          <div class="letter-highlight-box">
+            <strong>Stato del Sistema:</strong> Non hai soltanto ottenuto una laurea prestigiosa. Hai dimostrato a te stesso e a tutti noi cosa significano passione autentica, determinazione incrollabile e la capacità rara di non mollare mai di fronte a nessun errore irreversibile.
+          </div>
+
+          <p>
+            Ogni linea di codice scritta, ogni pizza fredda consumata sui libri, ogni caffè trangugiato in aula studio ha costruito la persona straordinaria e il brillante professionista che sei diventato oggi.
+          </p>
+
+          <p>
+            Ora si apre un capitolo nuovo ed entusiasmante: il mondo del lavoro, i tuoi progetti più ambiziosi e tutte le sfide che saprai conquistare con la stessa grinta. Ricorda sempre di mantenere viva la curiosità, di fare backup frequenti e, soprattutto, di non dimenticare mai le risate e le amicizie nate in questi anni universitari.
+          </p>
+
+          <p style="font-weight: 600; color: #f8fafc;">
+            Buona strada, Dottore in Informatica. Siamo immensamente fieri di te!
+          </p>
+        </div>
+
+        <!-- Firme e Data -->
+        <footer class="letter-signatures">
+          <div class="signature-block">
+            <span class="signature-label">Con affetto e ammirazione,</span>
+            <span class="signature-names">I tuoi compagni di codice & di vita ❤️</span>
+          </div>
+          <div class="signature-block" style="text-align: right;">
+            <span class="signature-label">Data di Rilascio:</span>
+            <span class="signature-date">25 Settembre 2026 • Giorno della Laurea</span>
+          </div>
+        </footer>
+
+        <!-- Bottoni di Azione (Stampa PDF, Dedica Speciale e Riavvia Terminale) -->
+        <div class="letter-actions no-print">
+          <button id="btn-print-pdf" class="btn-primary" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Scarica in PDF / Stampa Lettera
+          </button>
+
+          <!-- Pulsante Rosso Dedica Speciale -->
+          <button id="btn-open-special-warning" class="btn-special-red" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            Dedica speciale 🔒
+          </button>
+          
+          <button id="btn-restart-term" class="btn-secondary" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+            </svg>
+            Rigioca / Riapri Terminale
+          </button>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         6. BANNER DI AVVISO: "LEGGI QUANDO SEI DA SOLO"
+         ==================================================================== -->
+    <div id="special-warning-modal" class="special-warning-backdrop" role="dialog" aria-modal="true" aria-labelledby="special-warning-title">
+      <div class="special-warning-box">
+        <div class="special-warning-glitch-bar">
+          <span class="warning-led"></span>
+          <span>SYSTEM CONFIDENTIAL // RESTRICTED ACCESS</span>
+          <span class="warning-led"></span>
+        </div>
+        
+        <div class="special-warning-icon">⚠️</div>
+        
+        <h2 id="special-warning-title" class="special-warning-title">
+          LEGGI QUANDO SEI DA SOLO
+        </h2>
+        
+        <p class="special-warning-desc">
+          Questa sezione contiene riflessioni personali e verità non censurate.<br>
+          Assicurati di essere in un momento di privacy prima di continuare.
+        </p>
+
+        <div class="special-warning-actions">
+          <button id="btn-proceed-special" class="btn-warning-proceed" type="button">
+            Procedi ➔
+          </button>
+          <button id="btn-cancel-special" class="btn-warning-back" type="button">
+            ⬅ Torna indietro
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         7. PAGINA DEDICA SPECIALE AMICO (RICCARDO)
+         ==================================================================== -->
+    <article id="special-dedication-page" aria-label="Dedica Speciale da Amico">
+      <div class="special-dedication-container">
+        
+        <!-- Header con stile terminale hacker pulito -->
+        <header class="special-header">
+          <div class="special-terminal-tag">
+            <span class="tag-pulse"></span>
+            ROOT_PRIVILEGE // UNENCRYPTED_MESSAGE_FROM_RICCARDO.TXT
+          </div>
+          <h1 class="special-title">Per il mio Amico &amp; Fratello</h1>
+          <div class="special-meta">
+            <span>Autore: <strong style="color: #38ef7d;">Riccardo</strong></span>
+            <span>Data: <strong>25 Settembre 2026</strong></span>
+            <span>Livello: <strong>Personale &amp; Riservato</strong></span>
+          </div>
+        </header>
+
+        <!-- Box Avviso Sensibile richiesto -->
+        <div class="special-alert-banner">
+          <span class="alert-icon">⚡</span>
+          <strong>[CONTENUTI SENSIBILI. POTREBBERO RICORDARE LE STORIE DELLE 08 IN CALORE SU INSTA. PROCEDI CON CAUTELA]</strong>
+        </div>
+
+        <!-- Testo integrale della dedica -->
+        <div class="special-body">
+          <p>
+            Sono ormai 20 anni che ti conosco. Abbiamo avuto la possibilità di crescere vicini per molto tempo. Per quanto mi rigurda è stata una fortuna determinante. Sei stato per molto tempo un esempio, nel bene e nel male, da seguire. Ho imparato tanto e mi sono divertito al tuo fianco. Non sono uno a cui piace scrivere dediche, lettere, dichiarazioni o dump su Instagram con le nostre migliori foto. Lo sai. Da un po' di tempo non sono nemmeno molto espressivo, ma questa volta te lo devo.
+          </p>
+
+          <p>
+            Sei più di un semplice amico per me. Quando ho avuto bisogno ci sei sempre stato, molte volte con una maturità superiore a quella che di base si afferma nelle persone della nostra età. Sei sempre stato fedele e leale con me, anche quando ho sbagliato. Leale come un fratello, quello che io reputo tu sia per me.
+          </p>
+
+          <p>
+            Che oggi sia un giorno speciale per te lo sai già, non serve che te lo dico io.<br>
+            Che ora hai le chiavi della tua vita in mano anche.<br>
+            E anche che ti meriti tutto questo dopo gli sforzi che hai fatto, passo dopo passo.
+          </p>
+
+          <p>
+            Quindi se tutto questo si sa già, che cazzo ci sto a scrivere io qui?<br>
+            Solamente per congratularmi con te. Perché non è da tutti riuscire in un percorso netto come il tuo. Sempre a fare bene in ogni cosa. Sempre pulito, lineare, compatto, organizzato. Sempre una certezza. Una garanzia. Come il Milan sempre dietro in classifica.
+          </p>
+
+          <p>
+            Che fossi portato per molte attività era noto, palese e scontato. Ma che ci mettessi sempre e comunque impegno per tutto ciò... beh non lo era.
+          </p>
+
+          <p>
+            Forse però non sto scrivendo proprio solo per congratularmi.<br>
+            Ti scrivo anche per ringraziarti.<br>
+            Per offrirti sempre e comunque un aiuto nei momenti complicati (anche se per il tuo cazzo di ego, piuttosto ti fai la strada senza scarpe sui sassi, invece di fare l'autostop).<br>
+            Per rinnovarti i miei pensieri su di te.<br>
+            Per stimolarti a dare di più.<br>
+            Per spronarti ad essere un po' più imperfetto del tuo solito.
+          </p>
+
+          <div class="special-quote-box">
+            <strong>Per ricordarti che, ogni tanto, è bene fare la scelta migliore piuttosto che quella più giusta.</strong>
+          </div>
+
+          <p>
+            E anche se non ci vediamo più tutti i giorni, anche se dovessimo allontanarci, se dovessimo distanziarci, se dovessimo finire lontani, spero che riguardando questa dedica, un giorno, tu possa trovare in me, o in un altro amico, quello che tu rappresenti per me.
+          </p>
+
+          <p class="special-congrats">
+            Complimenti Dottore.
+          </p>
+
+          <div class="special-signature">
+            <span class="special-signature-label">Il tuo amico,</span>
+            <span class="special-signature-name">Riccardo.</span>
+          </div>
+
+          <div class="special-ps-box">
+            <p><strong>P.S.</strong> Ecco magari fatti 2 screen di questa parte che non si sa mai che ci buttino giù il sito un giorno.</p>
+            <p>E ammetti che robetta del genere manco la Giada te le scrive, dai.</p>
+          </div>
+        </div>
+
+        <!-- Azioni per la dedica speciale -->
+        <footer class="special-actions no-print">
+          <button id="btn-print-special-pdf" class="btn-primary" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Scarica in PDF / Stampa Questa Dedica
+          </button>
+
+          <button id="btn-back-to-letter" class="btn-secondary" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Torna alla Lettera Principale
+          </button>
+        </footer>
+
+      </div>
+    </article>
+
+    <!-- Script Principale Vanilla JS -->
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

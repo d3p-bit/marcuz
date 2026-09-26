@@ -1,0 +1,6 @@
+{
+  "name": "Terminale di Laurea",
+  "description": "Finto terminale Linux interattivo per sbloccare la lettera di laurea per uno studente di informatica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
